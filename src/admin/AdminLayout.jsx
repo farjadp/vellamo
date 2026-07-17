@@ -7,6 +7,7 @@ const nav = [
   { to: "/admin/seo", label: "SEO" },
   { to: "/admin/posts", label: "Articles" },
   { to: "/admin/team", label: "Team" },
+  { to: "/admin/social", label: "Social" },
   { to: "/admin/messages", label: "Messages" },
 ];
 

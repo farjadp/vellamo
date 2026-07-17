@@ -61,7 +61,20 @@ create table if not exists public.messages (
 
 comment on table public.messages is 'Messages submitted via the contact form';
 
--- 5. Site settings ----------------------------------------------------------
+-- 5. Social links -----------------------------------------------------------
+create table if not exists public.social_links (
+  id bigint generated always as identity primary key,
+  platform text not null,
+  url text not null,
+  display_order integer not null default 0,
+  active boolean not null default true,
+  created_at timestamp with time zone default now(),
+  updated_at timestamp with time zone default now()
+);
+
+comment on table public.social_links is 'Social media links shown in the footer';
+
+-- 6. Site settings ----------------------------------------------------------
 create table if not exists public.site_settings (
   id integer primary key default 1 check (id = 1),
   contact_email text default 'hello@vellamo.fi',
@@ -78,6 +91,7 @@ alter table public.seo_settings enable row level security;
 alter table public.posts enable row level security;
 alter table public.team_members enable row level security;
 alter table public.messages enable row level security;
+alter table public.social_links enable row level security;
 alter table public.site_settings enable row level security;
 
 -- 7. Policies: public can read published/visible data -----------------------
@@ -93,6 +107,9 @@ create policy "Public read team" on public.team_members
 create policy "Public read settings" on public.site_settings
   for select to anon using (true);
 
+create policy "Public read social" on public.social_links
+  for select to anon using (active = true);
+
 -- 8. Policies: authenticated users (admins) can manage everything -----------
 create policy "Admin manage seo" on public.seo_settings
   for all to authenticated using (true) with check (true);
@@ -104,6 +121,9 @@ create policy "Admin manage team" on public.team_members
   for all to authenticated using (true) with check (true);
 
 create policy "Admin manage messages" on public.messages
+  for all to authenticated using (true) with check (true);
+
+create policy "Admin manage social" on public.social_links
   for all to authenticated using (true) with check (true);
 
 create policy "Admin manage settings" on public.site_settings

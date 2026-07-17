@@ -1,6 +1,4 @@
-import { lazy, Suspense } from "react";
 import {
-  BrowserRouter,
   Navigate,
   Route,
   Routes,
@@ -12,6 +10,7 @@ import Dashboard from "./Dashboard.jsx";
 import SEOPage from "./SEOPage.jsx";
 import PostsPage from "./PostsPage.jsx";
 import TeamPage from "./TeamPage.jsx";
+import SocialLinksPage from "./SocialLinksPage.jsx";
 import MessagesPage from "./MessagesPage.jsx";
 
 function ProtectedRoutes({ session }) {
@@ -30,6 +29,7 @@ function ProtectedRoutes({ session }) {
         <Route path="seo" element={<SEOPage />} />
         <Route path="posts/*" element={<PostsPage />} />
         <Route path="team/*" element={<TeamPage />} />
+        <Route path="social" element={<SocialLinksPage />} />
         <Route path="messages" element={<MessagesPage />} />
       </Routes>
     </AdminLayout>
@@ -41,11 +41,9 @@ export default function AdminApp() {
   const { session, setSession } = useAuth();
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="login" element={<Login onSession={setSession} />} />
-        <Route path="*" element={<ProtectedRoutes session={session} />} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="login" element={<Login onSession={setSession} />} />
+      <Route path="*" element={<ProtectedRoutes session={session} />} />
+    </Routes>
   );
 }

@@ -4,6 +4,7 @@ import { motion, useScroll } from "framer-motion";
 import { NAV, FOOTER } from "../content.js";
 import { Logo, LogoMark } from "./Graphics.jsx";
 import { useSeo } from "../hooks/useSeo.js";
+import { useSocialLinks } from "../hooks/useSocialLinks.js";
 
 /** Scroll to top on route change (but respect in-page anchor navigation). */
 function ScrollToTop() {
@@ -119,6 +120,7 @@ function NavBar() {
 }
 
 function Footer() {
+  const { links } = useSocialLinks();
   return (
     <footer className="border-t border-vellamo-ice/10 pb-10 pt-16">
       <div className="mx-auto max-w-6xl px-5">
@@ -139,7 +141,22 @@ function Footer() {
             ))}
           </nav>
         </div>
-        <div className="mt-12 flex flex-col items-start gap-3 border-t border-vellamo-ice/10 pt-6 text-xs text-vellamo-ice/40 md:flex-row md:items-center md:justify-between">
+        {links.length > 0 && (
+          <div className="mt-10 flex flex-wrap gap-3">
+            {links.map((link) => (
+              <a
+                key={link.id}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full border border-vellamo-ice/10 bg-vellamo-ice/5 px-4 py-2 text-sm text-vellamo-ice/70 transition-colors hover:border-vellamo-teal/40 hover:text-vellamo-teal"
+              >
+                {link.platform}
+              </a>
+            ))}
+          </div>
+        )}
+        <div className="mt-10 flex flex-col items-start gap-3 border-t border-vellamo-ice/10 pt-6 text-xs text-vellamo-ice/40 md:flex-row md:items-center md:justify-between">
           <p>{FOOTER.copyright}</p>
           <div aria-hidden="true">
             <LogoMark size={22} tone="light" />
