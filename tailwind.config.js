@@ -9,6 +9,8 @@ export default {
           teal: "var(--vellamo-teal)",
           ice: "var(--vellamo-ice)",
           gray: "var(--vellamo-gray)",
+          deep: "var(--vellamo-deep)",
+          abyss: "var(--vellamo-abyss)",
         },
       },
       fontFamily: {

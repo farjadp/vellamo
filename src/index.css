@@ -9,6 +9,9 @@
   --vellamo-amber: #ef9f27; /* product dashboard only — never used on this site */
   --vellamo-red: #c0392b; /* product dashboard only — never used on this site */
   --vellamo-gray: #5f6e78;
+  /* dark shades of the brand blue for the immersive underwater theme */
+  --vellamo-deep: #092c47;
+  --vellamo-abyss: #041624;
 }
 
 html {
@@ -16,8 +19,88 @@ html {
 }
 
 body {
-  @apply font-sans text-vellamo-gray bg-white antialiased;
+  @apply font-sans antialiased;
   line-height: 1.7;
+  color: rgba(244, 248, 250, 0.72);
+  background:
+    radial-gradient(1100px 500px at 85% -5%, rgba(29, 158, 117, 0.10), transparent 60%),
+    radial-gradient(900px 600px at 0% 30%, rgba(14, 58, 93, 0.55), transparent 65%),
+    linear-gradient(180deg, var(--vellamo-abyss) 0%, var(--vellamo-deep) 55%, var(--vellamo-abyss) 100%);
+  background-attachment: fixed;
+}
+
+::selection {
+  background: rgba(29, 158, 117, 0.35);
+  color: var(--vellamo-ice);
+}
+
+/* frosted glass card */
+.glass {
+  background: rgba(244, 248, 250, 0.04);
+  border: 1px solid rgba(244, 248, 250, 0.09);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.glass-strong {
+  background: rgba(4, 22, 36, 0.65);
+  border: 1px solid rgba(244, 248, 250, 0.1);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+/* teal glow accents */
+.glow-teal {
+  box-shadow: 0 0 40px -8px rgba(29, 158, 117, 0.45);
+}
+
+.card-hover {
+  transition: transform 0.4s cubic-bezier(0.21, 0.47, 0.32, 0.98),
+    border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-6px);
+  border-color: rgba(29, 158, 117, 0.5);
+  box-shadow: 0 20px 50px -18px rgba(29, 158, 117, 0.35);
+}
+
+/* small teal section label */
+.eyebrow {
+  letter-spacing: 0.18em;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--vellamo-teal);
+}
+
+/* pulsing sensor dot */
+@keyframes sensor-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(29, 158, 117, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(29, 158, 117, 0);
+  }
+}
+
+.sensor-pulse {
+  animation: sensor-pulse 2.6s ease-in-out infinite;
+}
+
+/* gentle floating bob for decorative elements */
+@keyframes float-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+.float-bob {
+  animation: float-bob 7s ease-in-out infinite;
 }
 
 /* Tabular figures for stats and metrics */
@@ -26,19 +109,7 @@ body {
   font-weight: 600;
 }
 
-/* Gentle fade/slide-in on scroll */
-.reveal {
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-}
-
-.reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Slow ambient wave-line drift in the hero */
+/* Slow ambient wave-line drift */
 @keyframes wave-drift {
   from {
     transform: translateX(0);
@@ -60,13 +131,10 @@ body {
   html {
     scroll-behavior: auto;
   }
-  .reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
   .wave-drift,
-  .wave-drift-slow {
+  .wave-drift-slow,
+  .sensor-pulse,
+  .float-bob {
     animation: none;
   }
 }

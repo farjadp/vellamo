@@ -125,11 +125,11 @@ export function SectionDivider({ className = "" }) {
   return (
     <div className={`flex justify-center py-2 ${className}`} aria-hidden="true">
       <svg width="160" height="40" viewBox="0 0 160 40" fill="none">
-        <line x1="0" y1="12" x2="160" y2="12" stroke={BLUE} strokeWidth="2" opacity="0.25" />
-        <line x1="56" y1="12" x2="56" y2="36" stroke={BLUE} strokeWidth="2" opacity="0.25" />
-        <line x1="80" y1="12" x2="80" y2="36" stroke={BLUE} strokeWidth="2" opacity="0.25" />
-        <line x1="104" y1="12" x2="104" y2="36" stroke={BLUE} strokeWidth="2" opacity="0.25" />
-        <line x1="56" y1="26" x2="104" y2="26" stroke={BLUE} strokeWidth="1.5" opacity="0.25" />
+        <line x1="0" y1="12" x2="160" y2="12" stroke={ICE} strokeWidth="2" opacity="0.2" />
+        <line x1="56" y1="12" x2="56" y2="36" stroke={ICE} strokeWidth="2" opacity="0.2" />
+        <line x1="80" y1="12" x2="80" y2="36" stroke={ICE} strokeWidth="2" opacity="0.2" />
+        <line x1="104" y1="12" x2="104" y2="36" stroke={ICE} strokeWidth="2" opacity="0.2" />
+        <line x1="56" y1="26" x2="104" y2="26" stroke={ICE} strokeWidth="1.5" opacity="0.2" />
         <circle cx="80" cy="19" r="2.5" fill={TEAL} />
       </svg>
     </div>
@@ -149,17 +149,17 @@ export function BalticMotif() {
       {/* stylized coastline strokes */}
       <path
         d="M30 200c30-14 44-42 40-72s16-52 44-60 44-30 40-52"
-        stroke={BLUE}
+        stroke={ICE}
         strokeWidth="3"
         strokeLinecap="round"
-        opacity="0.6"
+        opacity="0.55"
       />
       <path
         d="M70 226c36-10 50-40 48-70s20-46 48-56 46-34 44-64"
-        stroke={BLUE}
+        stroke={ICE}
         strokeWidth="2"
         strokeLinecap="round"
-        opacity="0.3"
+        opacity="0.25"
       />
       {/* short wave ticks in the sea */}
       <path d="M210 190c6 0 6-5 12-5s6 5 12 5" stroke={TEAL} strokeWidth="2" strokeLinecap="round" opacity="0.7" />
@@ -177,7 +177,7 @@ export function BalticMotif() {
 
 /* ------------------------------ icons ----------------------------------- */
 
-const iconStroke = { stroke: BLUE, strokeWidth: 2, strokeLinecap: "round" };
+const iconStroke = { stroke: ICE, strokeWidth: 2, strokeLinecap: "round" };
 
 /** Fatigue: a pile with a growing micro-crack under repeated load ticks. */
 export function IconFatigue({ size = 44 }) {
@@ -309,7 +309,7 @@ export function IconShield({ size = 40 }) {
 
 /** Icon avatar for team cards (photos will replace these later). */
 export function AvatarIcon({ size = 72, accent = false }) {
-  const ring = accent ? TEAL : BLUE;
+  const ring = accent ? TEAL : "rgba(244, 248, 250, 0.45)";
   return (
     <svg
       width={size}
@@ -319,9 +319,16 @@ export function AvatarIcon({ size = 72, accent = false }) {
       role="img"
       aria-label="Team member placeholder avatar"
     >
-      <circle cx="36" cy="36" r="35" fill={ICE} stroke={ring} strokeWidth="2" />
-      <circle cx="36" cy="28" r="10" fill="none" stroke={ring} strokeWidth="2.5" />
-      <path d="M16 60c3-11 11-16 20-16s17 5 20 16" fill="none" stroke={ring} strokeWidth="2.5" strokeLinecap="round" />
+      <circle
+        cx="36"
+        cy="36"
+        r="35"
+        fill="rgba(244, 248, 250, 0.05)"
+        stroke={ring}
+        strokeWidth="2"
+      />
+      <circle cx="36" cy="28" r="10" fill="none" stroke={ICE} strokeWidth="2.5" opacity="0.7" />
+      <path d="M16 60c3-11 11-16 20-16s17 5 20 16" fill="none" stroke={ICE} strokeWidth="2.5" strokeLinecap="round" opacity="0.7" />
       <circle cx="52" cy="18" r="4" fill={TEAL} />
     </svg>
   );

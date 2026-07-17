@@ -8,8 +8,8 @@ export default function About() {
   return (
     <>
       <PageHeader title={ABOUT_PAGE.title} />
-      <section className="bg-white">
-        <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 py-20 md:grid-cols-2 md:py-28">
+      <section>
+        <div className="mx-auto grid max-w-6xl items-center gap-14 px-5 py-20 md:grid-cols-2 md:py-28">
           <Reveal>
             <div>
               {ABOUT_PAGE.paragraphs.map((p) => (
@@ -17,13 +17,15 @@ export default function About() {
                   {p}
                 </p>
               ))}
-              <blockquote className="mt-8 rounded-xl border-l-4 border-vellamo-teal bg-vellamo-ice p-6 text-lg font-medium text-vellamo-blue">
+              <blockquote className="glass-strong glow-teal mt-8 rounded-2xl border-l-4 border-vellamo-teal p-6 text-lg font-medium text-vellamo-ice">
                 {ABOUT_PAGE.elevator}
               </blockquote>
             </div>
           </Reveal>
           <Reveal delay={150} className="flex justify-center">
-            <BalticMotif />
+            <div className="glass float-bob rounded-3xl p-10">
+              <BalticMotif />
+            </div>
           </Reveal>
         </div>
       </section>

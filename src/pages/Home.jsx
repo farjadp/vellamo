@@ -15,10 +15,10 @@ export default function Home() {
     <>
       <Hero />
       <Problem />
-      <SectionDivider className="bg-vellamo-ice" />
+      <SectionDivider />
       <Solution />
       <WhyFinland />
-      <SectionDivider className="bg-vellamo-ice" />
+      <SectionDivider />
       <WhoFor />
       <TeamSection />
       <ContactSection />
