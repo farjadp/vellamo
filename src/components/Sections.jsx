@@ -194,12 +194,12 @@ export function Hero() {
           >
             {HERO.primaryCta}
           </Link>
-          <a
-            href="#solution"
+          <Link
+            to="/product"
             className="glass rounded-xl px-7 py-3.5 font-semibold text-vellamo-ice transition-colors hover:border-vellamo-teal/60"
           >
             {HERO.secondaryCta}
-          </a>
+          </Link>
         </motion.div>
       </motion.div>
       {/* scroll hint */}

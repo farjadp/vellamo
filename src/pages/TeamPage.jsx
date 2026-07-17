@@ -1,12 +1,6 @@
-import { TEAM } from "../content.js";
-import { PageHeader, TeamSection } from "../components/Sections.jsx";
+import { TeamSection } from "../components/Sections.jsx";
 
-/** Team page. */
+/** Team page — TeamSection carries its own heading and intro. */
 export default function TeamPage() {
-  return (
-    <>
-      <PageHeader title={TEAM.title} intro={TEAM.intro} />
-      <TeamSection />
-    </>
-  );
+  return <TeamSection />;
 }

@@ -13,12 +13,48 @@ export const NAV = {
   cta: "Request a pilot",
 };
 
-// Anchor links shown on the home page hero area only.
-export const HOME_ANCHORS = [
-  { label: "Problem", href: "#problem" },
-  { label: "Solution", href: "#solution" },
-  { label: "Why Finland", href: "#why-finland" },
-];
+// Home page: compact teasers that link to the inner pages.
+export const HOME = {
+  glimpse: {
+    eyebrow: "the problem",
+    link: "See how vellamo solves it",
+  },
+  explore: {
+    eyebrow: "dive deeper",
+    title: "Explore vellamo",
+    cards: [
+      {
+        key: "product",
+        to: "/product",
+        title: "Product",
+        text: "Sensors on your structure, a physics-based digital twin behind them, and plain answers on top — as a subscription.",
+      },
+      {
+        key: "team",
+        to: "/team",
+        title: "Team",
+        text: "Structural engineers, marine researchers and experienced operators — the people behind the guardian.",
+      },
+      {
+        key: "about",
+        to: "/about",
+        title: "About",
+        text: "Why we're built in Finland, where the sea freezes — and named after the goddess of the sea.",
+      },
+      {
+        key: "news",
+        to: "/news",
+        title: "News & knowledge",
+        text: "Notes from our engineers on structural health monitoring, ice loads and marine infrastructure.",
+      },
+    ],
+  },
+  ctaBand: {
+    title: "Talk to us about your first pilot.",
+    text: "Tell us about your structure — we'll come back with a monitoring proposal in plain engineering terms.",
+    button: "Request a pilot",
+  },
+};
 
 export const HERO = {
   headline: "Guardian beneath the surface.",
