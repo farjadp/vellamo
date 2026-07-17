@@ -34,7 +34,7 @@ export const PROBLEM = {
   id: "problem",
   title: "Damage you cannot see",
   intro:
-    "Marine structures degrade quietly, below the waterline, between inspections.",
+    "Harbors, quays, offshore wind foundations and ship hulls all stand in cold salt water — and the water slowly destroys them, below the surface, where no one can see.",
   columns: [
     {
       key: "fatigue",
@@ -62,6 +62,8 @@ export const PROBLEM = {
       text: "The cost of one unplanned failure or closure.",
     },
   ],
+  reality:
+    "Today, owners check these structures by sending divers down every few years — expensive, infrequent, and between two inspections nobody knows anything. Sometimes the first “inspection” is the failure itself: a cracked quay, a closed berth, an emergency repair that costs millions.",
 };
 
 export const SOLUTION = {
@@ -86,6 +88,14 @@ export const SOLUTION = {
       text: "Live condition, remaining-life estimate, and early alerts — as a subscription.",
     },
   ],
+  answers: {
+    title: "Three answers, updated constantly",
+    items: [
+      "What condition is my structure in right now?",
+      "How many years of life does it have left?",
+      "Which part needs attention — and when?",
+    ],
+  },
   quote: {
     text: "“Section B needs repair within 18 months — the rest is healthy.”",
     caption: "What you hear from Vellamo — plain answers, grounded in physics.",
@@ -96,9 +106,10 @@ export const WHY_FINLAND = {
   id: "why-finland",
   title: "Built where the sea freezes",
   paragraphs: [
-    "Large incumbents build expensive, project-based monitoring systems for oil and gas. Ice is a footnote in their load models — if it appears at all.",
-    "Vellamo is different by design: a focused, affordable subscription built specifically for cold-water and ice-load conditions. Ice–structure interaction in Baltic and Nordic waters is our specialty — the load case most competitors ignore.",
+    "Finland is a maritime country: shipyards in Turku and Helsinki, port infrastructure along the whole coast, offshore wind growing in the Baltic — and research partners like VTT and Aalto next door.",
+    "Most importantly, the Baltic freezes. Large incumbents build expensive, project-based monitoring systems for oil and gas; ice is a footnote in their load models, if it appears at all. Vellamo is different by design: a focused, affordable subscription built specifically for cold-water and ice-load conditions — the load case most competitors ignore.",
     "It is the hardest condition your structure faces every winter. It is the first thing our models were built for.",
+    "Finland is both our first market and the credibility stamp for the wider region — Sweden, Estonia and Norway, and later Canada.",
   ],
 };
 
@@ -134,6 +145,7 @@ export const TEAM = {
   title: "Team",
   intro:
     "Structural engineers, marine researchers and experienced operators — the science, the product and the commercial side under one roof.",
+  why: "Farshad builds the physics models that make predictions real. Hamidreza pairs structural engineering with CEO experience to run the company. Elyas has sold technical industrial solutions to serious B2B buyers for 15 years — and ports and shipyards are exactly that kind of buyer. Farjad turns the science into software customers can use.",
   members: [
     {
       key: "hamidreza",
@@ -207,6 +219,24 @@ export const PRODUCT_PAGE = {
       },
     ],
   },
+  pricing: {
+    title: "Simple, honest pricing",
+    note: "We don't manufacture hardware — we use proven, off-the-shelf sensors. The subscription is the product: monitoring, remaining-life estimates, alerts and reports.",
+    items: [
+      {
+        key: "install",
+        figure: "€20–60k",
+        label: "one-time installation, per site",
+        text: "Covers the sensor hardware and instrumentation of your structure.",
+      },
+      {
+        key: "subscription",
+        figure: "€1,500–4,000 / month",
+        label: "subscription, per structure",
+        text: "Continuous monitoring, early alerts, and engineering reports.",
+      },
+    ],
+  },
 };
 
 export const ABOUT_PAGE = {
@@ -216,6 +246,8 @@ export const ABOUT_PAGE = {
     "Our specialty is ice–structure interaction in cold Baltic and Nordic waters — the load case most competitors ignore.",
     "Vellamo is named after the Finnish goddess of the sea and waters — the guardian of what lies beneath the surface. That is the role we take on for your structures: a calm, constant watch.",
   ],
+  elevator:
+    "Vellamo watches marine structures from underwater — sensors plus physics models tell ports and wind operators the true condition of their assets, before failures happen.",
 };
 
 export const NEWS_PAGE = {

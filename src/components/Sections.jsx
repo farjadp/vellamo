@@ -132,6 +132,11 @@ export function Problem() {
             </Reveal>
           ))}
         </div>
+        <Reveal delay={200}>
+          <p className="mt-12 max-w-3xl border-l-2 border-vellamo-teal pl-5">
+            {PROBLEM.reality}
+          </p>
+        </Reveal>
       </div>
     </section>
   );
@@ -176,6 +181,26 @@ export function Solution() {
             );
           })}
         </div>
+        <Reveal delay={150}>
+          <div className="mt-14">
+            <h3 className="text-xl font-semibold text-vellamo-blue">
+              {SOLUTION.answers.title}
+            </h3>
+            <ul className="mt-5 grid gap-4 md:grid-cols-3">
+              {SOLUTION.answers.items.map((item, i) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-3 rounded-xl border border-vellamo-blue/10 bg-white p-5"
+                >
+                  <span className="stat-figure mt-0.5 text-sm text-vellamo-teal">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="font-medium text-vellamo-blue">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Reveal>
         <Reveal delay={200}>
           <figure className="mt-14 rounded-xl border-l-4 border-vellamo-teal bg-white p-8 shadow-sm md:p-10">
             <blockquote className="text-xl font-medium text-vellamo-blue md:text-2xl">
@@ -265,6 +290,9 @@ export function TeamSection() {
             {TEAM.title}
           </h2>
           <p className="mt-3 max-w-2xl text-lg">{TEAM.intro}</p>
+          <p className="mt-5 max-w-3xl border-l-2 border-vellamo-teal pl-5">
+            {TEAM.why}
+          </p>
         </Reveal>
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {TEAM.members.map((member, i) => (

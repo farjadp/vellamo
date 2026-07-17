@@ -39,6 +39,31 @@ export default function Product() {
               </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+      <section className="bg-vellamo-ice">
+        <div className="mx-auto max-w-6xl px-5 py-20 md:py-28">
+          <Reveal>
+            <h2 className="text-3xl font-bold text-vellamo-blue md:text-4xl">
+              {PRODUCT_PAGE.pricing.title}
+            </h2>
+            <p className="mt-3 max-w-2xl text-lg">{PRODUCT_PAGE.pricing.note}</p>
+          </Reveal>
+          <div className="mt-12 grid gap-6 sm:grid-cols-2">
+            {PRODUCT_PAGE.pricing.items.map((item, i) => (
+              <Reveal key={item.key} delay={i * 120}>
+                <div className="h-full rounded-xl bg-white p-8 shadow-sm">
+                  <p className="stat-figure text-3xl text-vellamo-blue md:text-4xl">
+                    {item.figure}
+                  </p>
+                  <p className="mt-1 text-sm font-medium text-vellamo-teal">
+                    {item.label}
+                  </p>
+                  <p className="mt-3">{item.text}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
           <Reveal delay={200}>
             <div className="mt-14">
               <Link

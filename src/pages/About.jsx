@@ -17,6 +17,9 @@ export default function About() {
                   {p}
                 </p>
               ))}
+              <blockquote className="mt-8 rounded-xl border-l-4 border-vellamo-teal bg-vellamo-ice p-6 text-lg font-medium text-vellamo-blue">
+                {ABOUT_PAGE.elevator}
+              </blockquote>
             </div>
           </Reveal>
           <Reveal delay={150} className="flex justify-center">
