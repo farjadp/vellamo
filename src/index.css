@@ -103,6 +103,27 @@ body {
   animation: float-bob 7s ease-in-out infinite;
 }
 
+/* Admin form inputs */
+.input-admin {
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(244, 248, 250, 0.14);
+  background: rgba(244, 248, 250, 0.05);
+  padding: 0.75rem 1rem;
+  color: var(--vellamo-ice);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input-admin::placeholder {
+  color: rgba(244, 248, 250, 0.4);
+}
+
+.input-admin:focus {
+  border-color: var(--vellamo-teal);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(29, 158, 117, 0.2);
+}
+
 /* Tabular figures for stats and metrics */
 .stat-figure {
   font-variant-numeric: tabular-nums;

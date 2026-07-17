@@ -1,5 +1,6 @@
-import { lazy, Suspense, useRef } from "react";
+import { lazy, Suspense, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { isSupabaseConfigured, supabase } from "../supabase.js";
 import {
   motion,
   useMotionValue,
@@ -17,6 +18,7 @@ import {
   CONTACT,
 } from "../content.js";
 import Reveal from "./Reveal.jsx";
+import { usePublicTeam } from "../hooks/usePublicTeam.js";
 import {
   BalticMotif,
   IconFatigue,
@@ -465,6 +467,7 @@ export function WhoFor() {
 /* --------------------------------- team ----------------------------------- */
 
 export function TeamSection() {
+  const { members } = usePublicTeam();
   return (
     <section id={TEAM.id} className="relative scroll-mt-20 overflow-hidden">
       <div
@@ -480,14 +483,18 @@ export function TeamSection() {
           </p>
         </Reveal>
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {TEAM.members.map((member, i) => (
+          {members.map((member, i) => (
             <Reveal key={member.key} delay={i * 110}>
               <TiltCard className="h-full p-7">
-                {/* PLACEHOLDER: replace <AvatarIcon /> with the team member's
-                    photo (e.g. <img src="..." alt={member.name} className="
-                    h-[72px] w-[72px] rounded-full object-cover" />) when real
-                    photos are available. */}
-                <AvatarIcon accent={i % 2 === 1} />
+                {member.photo_url ? (
+                  <img
+                    src={member.photo_url}
+                    alt={member.name}
+                    className="h-[72px] w-[72px] rounded-full object-cover ring-2 ring-vellamo-teal/40"
+                  />
+                ) : (
+                  <AvatarIcon accent={i % 2 === 1} />
+                )}
                 <h3 className="mt-4 text-lg font-semibold text-vellamo-ice">
                   {member.name}
                 </h3>
@@ -507,11 +514,30 @@ export function TeamSection() {
 /* -------------------------------- contact --------------------------------- */
 
 export function ContactSection() {
-  const handleSubmit = (event) => {
+  const [status, setStatus] = useState("");
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    setStatus("");
     const data = Object.fromEntries(new FormData(event.target).entries());
-    // Front-end only for now — no backend submission logic yet.
-    console.log("Contact form submitted:", data);
+
+    if (isSupabaseConfigured) {
+      const { error } = await supabase.from("messages").insert({
+        name: data.name,
+        email: data.email,
+        organization: data.organization || "",
+        message: data.message,
+      });
+      if (error) {
+        setStatus("error");
+        console.error(error);
+        return;
+      }
+    } else {
+      // Demo fallback: no backend configured yet
+      console.log("Contact form submitted:", data);
+    }
+
+    setStatus("ok");
     event.target.reset();
   };
 
@@ -586,6 +612,16 @@ export function ContactSection() {
                   className={inputClasses}
                 />
               </label>
+              {status === "ok" && (
+                <p className="rounded-lg border border-vellamo-teal/30 bg-vellamo-teal/10 px-4 py-3 text-sm text-vellamo-teal">
+                  Thanks — your message has been sent. We'll be in touch.
+                </p>
+              )}
+              {status === "error" && (
+                <p className="rounded-lg border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+                  Something went wrong. Please try again or email us directly.
+                </p>
+              )}
               <motion.button
                 type="submit"
                 whileHover={{ scale: 1.03 }}

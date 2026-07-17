@@ -3,6 +3,7 @@ import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { motion, useScroll } from "framer-motion";
 import { NAV, FOOTER } from "../content.js";
 import { Logo, LogoMark } from "./Graphics.jsx";
+import { useSeo } from "../hooks/useSeo.js";
 
 /** Scroll to top on route change (but respect in-page anchor navigation). */
 function ScrollToTop() {
@@ -151,6 +152,7 @@ function Footer() {
 
 /** Shared page shell: fixed glass nav, routed page content, footer. */
 export default function Layout() {
+  useSeo();
   return (
     <>
       <ScrollToTop />

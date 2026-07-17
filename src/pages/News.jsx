@@ -1,16 +1,20 @@
+import { Link } from "react-router-dom";
 import { NEWS_PAGE } from "../content.js";
 import { PageHeader } from "../components/Sections.jsx";
 import Reveal from "../components/Reveal.jsx";
+import { usePublicPosts } from "../hooks/usePublicPosts.js";
 
-/** News & knowledge base page — placeholder posts until real articles exist. */
+/** News & knowledge base page — reads live posts from Supabase, falls back to placeholders. */
 export default function News() {
+  const { posts } = usePublicPosts();
+
   return (
     <>
       <PageHeader title={NEWS_PAGE.title} intro={NEWS_PAGE.intro} />
       <section>
         <div className="mx-auto max-w-6xl px-5 py-20 md:py-28">
           <div className="grid gap-6 sm:grid-cols-2">
-            {NEWS_PAGE.posts.map((post, i) => (
+            {posts.map((post, i) => (
               <Reveal key={post.key} delay={i * 100}>
                 <article className="glass card-hover h-full rounded-2xl p-8">
                   <div className="flex items-center justify-between text-xs">
@@ -23,6 +27,14 @@ export default function News() {
                     {post.title}
                   </h2>
                   <p className="mt-2 text-sm">{post.excerpt}</p>
+                  {post.slug && (
+                    <Link
+                      to={`/news/${post.slug}`}
+                      className="mt-4 inline-block text-sm font-semibold text-vellamo-teal hover:underline"
+                    >
+                      Read more →
+                    </Link>
+                  )}
                 </article>
               </Reveal>
             ))}
