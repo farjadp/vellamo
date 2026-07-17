@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --vellamo-blue: #0e3a5d;
+  --vellamo-teal: #1d9e75;
+  --vellamo-ice: #f4f8fa;
+  --vellamo-amber: #ef9f27; /* product dashboard only — never used on this site */
+  --vellamo-red: #c0392b; /* product dashboard only — never used on this site */
+  --vellamo-gray: #5f6e78;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply font-sans text-vellamo-gray bg-white antialiased;
+  line-height: 1.7;
+}
+
+/* Tabular figures for stats and metrics */
+.stat-figure {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+/* Gentle fade/slide-in on scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Slow ambient wave-line drift in the hero */
+@keyframes wave-drift {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.wave-drift {
+  animation: wave-drift 28s linear infinite;
+}
+
+.wave-drift-slow {
+  animation: wave-drift 44s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .wave-drift,
+  .wave-drift-slow {
+    animation: none;
+  }
+}
