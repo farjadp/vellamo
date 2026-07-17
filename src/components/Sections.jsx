@@ -266,17 +266,15 @@ export function TeamSection() {
           </h2>
           <p className="mt-3 max-w-2xl text-lg">{TEAM.intro}</p>
         </Reveal>
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {TEAM.members.map((member, i) => (
             <Reveal key={member.key} delay={i * 100}>
-              <div className="h-full rounded-xl border border-vellamo-blue/10 p-7 text-center">
+              <div className="h-full rounded-xl border border-vellamo-blue/10 p-7">
                 {/* PLACEHOLDER: replace <AvatarIcon /> with the team member's
-                    photo (e.g. <img src="..." alt={member.name} className="mx-auto
+                    photo (e.g. <img src="..." alt={member.name} className="
                     h-[72px] w-[72px] rounded-full object-cover" />) when real
                     photos are available. */}
-                <div className="flex justify-center">
-                  <AvatarIcon accent={i % 2 === 1} />
-                </div>
+                <AvatarIcon accent={i % 2 === 1} />
                 <h3 className="mt-4 font-semibold text-vellamo-blue">{member.name}</h3>
                 <p className="mt-1 text-sm font-medium text-vellamo-teal">{member.role}</p>
                 <p className="mt-2 text-sm">{member.bio}</p>
