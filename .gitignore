@@ -1,6 +1,5 @@
 node_modules/
 dist/
-dist-dashboard/
 .DS_Store
 *.local
 .vercel
