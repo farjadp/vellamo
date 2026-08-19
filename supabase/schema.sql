@@ -110,6 +110,9 @@ create policy "Public read settings" on public.site_settings
 create policy "Public read social" on public.social_links
   for select to anon using (active = true);
 
+create policy "Public insert messages" on public.messages
+  for insert to anon with check (true);
+
 -- 8. Policies: authenticated users (admins) can manage everything -----------
 create policy "Admin manage seo" on public.seo_settings
   for all to authenticated using (true) with check (true);
