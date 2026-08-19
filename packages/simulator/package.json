@@ -1,0 +1,13 @@
+{
+  "name": "@vellamo/simulator",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "sim": "node index.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.110.7",
+    "dotenv": "^16.4.5"
+  }
+}
