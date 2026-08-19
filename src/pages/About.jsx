@@ -1,10 +1,11 @@
-import { ABOUT_PAGE } from "../content.js";
+import { useContent } from "../i18n/LocaleContext.jsx";
 import { PageHeader, WhyFinland } from "../components/Sections.jsx";
 import { BalticMotif, SectionDivider } from "../components/Graphics.jsx";
 import Reveal from "../components/Reveal.jsx";
 
 /** About page: company story, name origin, and the Finland/ice angle. */
 export default function About() {
+  const { ABOUT_PAGE } = useContent();
   return (
     <>
       <PageHeader title={ABOUT_PAGE.title} />

@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { isSupabaseConfigured, supabase } from "../supabase.js";
-import { NEWS_PAGE } from "../content.js";
 
-export function usePublicPosts() {
-  const [posts, setPosts] = useState(NEWS_PAGE.posts);
+/**
+ * Posts: live from Supabase if configured, otherwise the given locale's
+ * static fallback (Supabase content isn't localized yet).
+ */
+export function usePublicPosts(fallbackPosts) {
+  const [posts, setPosts] = useState(fallbackPosts);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -35,7 +38,7 @@ export function usePublicPosts() {
   return { posts, loading };
 }
 
-export function usePublicPost(slug) {
+export function usePublicPost(slug, fallbackPosts) {
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -44,7 +47,7 @@ export function usePublicPost(slug) {
       setLoading(false);
       return;
     }
-    const fallback = NEWS_PAGE.posts.find((p) => p.key === slug);
+    const fallback = fallbackPosts?.find((p) => p.key === slug);
     if (!isSupabaseConfigured) {
       setPost(fallback || null);
       setLoading(false);
@@ -72,6 +75,7 @@ export function usePublicPost(slug) {
           setPost(fallback || null);
         }
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slug]);
 
   return { post, loading };

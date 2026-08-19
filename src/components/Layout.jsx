@@ -1,10 +1,18 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { motion, useScroll } from "framer-motion";
-import { NAV, FOOTER } from "../content.js";
 import { Logo, LogoMark } from "./Graphics.jsx";
 import { useSeo } from "../hooks/useSeo.js";
 import { useSocialLinks } from "../hooks/useSocialLinks.js";
+import {
+  useContent,
+  useLocale,
+  LOCALE_ORDER,
+  LOCALE_LABELS,
+  LOCALE_NAMES,
+  buildLocalePath,
+  stripLocalePrefix,
+} from "../i18n/LocaleContext.jsx";
 
 /** Scroll to top on route change (but respect in-page anchor navigation). */
 function ScrollToTop() {
@@ -22,10 +30,39 @@ function ScrollToTop() {
   return null;
 }
 
+/** EN / FI / SV switcher — preserves the current page across locales. */
+function LanguageSwitcher({ className = "" }) {
+  const { locale } = useLocale();
+  const { pathname } = useLocation();
+  const rootPath = stripLocalePrefix(pathname, locale);
+
+  return (
+    <div className={`flex items-center gap-1 ${className}`} aria-label="Language">
+      {LOCALE_ORDER.map((l) => (
+        <Link
+          key={l}
+          to={buildLocalePath(l, rootPath)}
+          aria-current={l === locale ? "true" : undefined}
+          aria-label={LOCALE_NAMES[l]}
+          className={`rounded-md px-1.5 py-1 text-xs font-semibold transition-colors ${
+            l === locale
+              ? "text-vellamo-teal"
+              : "text-vellamo-ice/45 hover:text-vellamo-ice/80"
+          }`}
+        >
+          {LOCALE_LABELS[l]}
+        </Link>
+      ))}
+    </div>
+  );
+}
+
 function NavBar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { scrollYProgress } = useScroll();
+  const { NAV, UI } = useContent();
+  const { path } = useLocale();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -53,19 +90,20 @@ function NavBar() {
       />
       <nav
         className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3.5"
-        aria-label="Main navigation"
+        aria-label={UI.mainNavLabel}
       >
-        <Link to="/" aria-label="vellamo — home">
+        <Link to={path("/")} aria-label={UI.homeAriaLabel}>
           <Logo tone="light" size={32} />
         </Link>
         <div className="hidden items-center gap-7 md:flex">
           {NAV.links.map((link) => (
-            <NavLink key={link.to} to={link.to} className={linkClasses}>
+            <NavLink key={link.to} to={path(link.to)} className={linkClasses}>
               {link.label}
             </NavLink>
           ))}
+          <LanguageSwitcher />
           <Link
-            to="/contact"
+            to={path("/contact")}
             className="glow-teal rounded-xl bg-vellamo-teal px-4 py-2 text-sm font-semibold text-white transition-transform hover:scale-[1.05]"
           >
             {NAV.cta}
@@ -74,7 +112,7 @@ function NavBar() {
         <button
           type="button"
           className="md:hidden"
-          aria-label={open ? "Close menu" : "Open menu"}
+          aria-label={open ? UI.closeMenu : UI.openMenu}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
         >
@@ -99,20 +137,23 @@ function NavBar() {
           {NAV.links.map((link) => (
             <NavLink
               key={link.to}
-              to={link.to}
+              to={path(link.to)}
               onClick={() => setOpen(false)}
               className="block py-2.5 text-sm font-medium text-vellamo-ice/80 hover:text-vellamo-teal"
             >
               {link.label}
             </NavLink>
           ))}
-          <Link
-            to="/contact"
-            onClick={() => setOpen(false)}
-            className="mt-2 inline-block rounded-xl bg-vellamo-teal px-4 py-2 text-sm font-semibold text-white"
-          >
-            {NAV.cta}
-          </Link>
+          <div className="mt-2 flex items-center justify-between">
+            <Link
+              to={path("/contact")}
+              onClick={() => setOpen(false)}
+              className="inline-block rounded-xl bg-vellamo-teal px-4 py-2 text-sm font-semibold text-white"
+            >
+              {NAV.cta}
+            </Link>
+            <LanguageSwitcher />
+          </div>
         </div>
       )}
     </header>
@@ -121,6 +162,9 @@ function NavBar() {
 
 function Footer() {
   const { links } = useSocialLinks();
+  const { NAV, FOOTER, UI } = useContent();
+  const { path } = useLocale();
+
   return (
     <footer className="border-t border-vellamo-ice/10 pb-10 pt-16">
       <div className="mx-auto max-w-6xl px-5">
@@ -129,17 +173,23 @@ function Footer() {
             <Logo tone="light" size={30} />
             <p className="mt-5 text-sm text-vellamo-ice/60">{FOOTER.boilerplate}</p>
           </div>
-          <nav aria-label="Footer navigation" className="flex flex-col gap-2.5">
+          <nav aria-label={UI.footerNavLabel} className="flex flex-col gap-2.5">
             {NAV.links.map((link) => (
               <Link
                 key={link.to}
-                to={link.to}
+                to={path(link.to)}
                 className="text-sm text-vellamo-ice/60 transition-colors hover:text-vellamo-teal"
               >
                 {link.label}
               </Link>
             ))}
           </nav>
+          <div>
+            <p className="text-xs font-medium uppercase tracking-widest text-vellamo-ice/40">
+              {UI.languageLabel}
+            </p>
+            <LanguageSwitcher className="mt-2.5 -ml-1.5" />
+          </div>
         </div>
         {links.length > 0 && (
           <div className="mt-10 flex flex-wrap gap-3">

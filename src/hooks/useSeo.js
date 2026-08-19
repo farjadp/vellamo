@@ -1,18 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { isSupabaseConfigured, supabase } from "../supabase.js";
-
-const defaults = {
-  title: "vellamo — Guardian beneath the surface",
-  description:
-    "Vellamo is a Finland-based structural health monitoring company for marine and port infrastructure — built for ice and cold water.",
-};
+import { useLocale } from "../i18n/LocaleContext.jsx";
 
 export function useSeo() {
   const { pathname } = useLocation();
+  const { locale, content } = useLocale();
+  const defaults = content.SITE;
 
   useEffect(() => {
-    if (!isSupabaseConfigured) {
+    document.documentElement.lang = locale;
+  }, [locale]);
+
+  useEffect(() => {
+    // SEO overrides are only ever stored/read in English for now — the
+    // Supabase-driven SEO editor doesn't have per-locale fields yet.
+    if (!isSupabaseConfigured || locale !== "en") {
       updateMeta(defaults.title, defaults.description);
       return;
     }
@@ -28,7 +31,7 @@ export function useSeo() {
         );
       })
       .catch(() => updateMeta(defaults.title, defaults.description));
-  }, [pathname]);
+  }, [pathname, locale, defaults.title, defaults.description]);
 }
 
 function updateMeta(title, description) {

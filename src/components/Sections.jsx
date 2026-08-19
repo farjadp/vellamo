@@ -8,15 +8,7 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
-import {
-  HERO,
-  PROBLEM,
-  SOLUTION,
-  WHY_FINLAND,
-  WHO_FOR,
-  TEAM,
-  CONTACT,
-} from "../content.js";
+import { useContent, useLocale } from "../i18n/LocaleContext.jsx";
 import Reveal from "./Reveal.jsx";
 import { usePublicTeam } from "../hooks/usePublicTeam.js";
 import {
@@ -108,7 +100,7 @@ function StaggeredHeadline({ text, className = "" }) {
           }}
         >
           {word}
-          {i < words.length - 1 ? "\u00A0" : ""}
+          {i < words.length - 1 ? " " : ""}
         </motion.span>
       ))}
     </h1>
@@ -139,6 +131,8 @@ export function PageHeader({ title, intro }) {
 /* --------------------------------- hero ----------------------------------- */
 
 export function Hero() {
+  const { HERO, UI } = useContent();
+  const { path } = useLocale();
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -162,7 +156,7 @@ export function Hero() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.15, duration: 0.8 }}
         >
-          structural health monitoring · finland
+          {UI.heroEyebrow}
         </motion.p>
         <StaggeredHeadline
           text={HERO.headline}
@@ -191,13 +185,13 @@ export function Hero() {
           transition={{ delay: 1.5, duration: 0.8 }}
         >
           <Link
-            to="/contact"
+            to={path("/contact")}
             className="glow-teal rounded-xl bg-vellamo-teal px-7 py-3.5 font-semibold text-white transition-transform hover:scale-[1.04]"
           >
             {HERO.primaryCta}
           </Link>
           <Link
-            to="/product"
+            to={path("/product")}
             className="glass rounded-xl px-7 py-3.5 font-semibold text-vellamo-ice transition-colors hover:border-vellamo-teal/60"
           >
             {HERO.secondaryCta}
@@ -233,11 +227,12 @@ const PROBLEM_ICONS = {
 };
 
 export function Problem() {
+  const { PROBLEM, UI } = useContent();
   return (
     <section id={PROBLEM.id} className="relative scroll-mt-20">
       <div className="mx-auto max-w-6xl px-5 py-24 md:py-32">
         <SectionHeading
-          eyebrow="the problem"
+          eyebrow={UI.problemEyebrow}
           title={PROBLEM.title}
           intro={PROBLEM.intro}
         />
@@ -295,6 +290,7 @@ const SOLUTION_ICONS = {
 };
 
 export function Solution() {
+  const { SOLUTION, UI } = useContent();
   return (
     <section id={SOLUTION.id} className="relative scroll-mt-20 overflow-hidden">
       <div
@@ -304,7 +300,7 @@ export function Solution() {
       />
       <div className="mx-auto max-w-6xl px-5 py-24 md:py-32">
         <SectionHeading
-          eyebrow="the solution"
+          eyebrow={UI.solutionEyebrow}
           title={SOLUTION.title}
           intro={SOLUTION.intro}
         />
@@ -385,7 +381,7 @@ export function Solution() {
             <div className="flex items-center gap-2" aria-hidden="true">
               <span className="sensor-pulse h-2.5 w-2.5 rounded-full bg-vellamo-teal" />
               <span className="text-xs font-medium uppercase tracking-widest text-vellamo-teal">
-                live condition
+                {UI.liveConditionBadge}
               </span>
             </div>
             <blockquote className="mt-4 text-2xl font-medium text-vellamo-ice md:text-3xl">
@@ -404,11 +400,12 @@ export function Solution() {
 /* ------------------------------ why finland ------------------------------- */
 
 export function WhyFinland() {
+  const { WHY_FINLAND, UI } = useContent();
   return (
     <section id={WHY_FINLAND.id} className="relative scroll-mt-20 overflow-hidden">
       <div className="mx-auto grid max-w-6xl items-center gap-14 px-5 py-24 md:grid-cols-2 md:py-32">
         <div>
-          <SectionHeading eyebrow="why finland · why ice" title={WHY_FINLAND.title} />
+          <SectionHeading eyebrow={UI.whyFinlandEyebrow} title={WHY_FINLAND.title} />
           {WHY_FINLAND.paragraphs.map((p, i) => (
             <Reveal key={p.slice(0, 24)} delay={120 + i * 100}>
               <p className="mt-5">{p}</p>
@@ -439,10 +436,11 @@ const WHO_ICONS = {
 };
 
 export function WhoFor() {
+  const { WHO_FOR, UI } = useContent();
   return (
     <section id={WHO_FOR.id} className="scroll-mt-20">
       <div className="mx-auto max-w-6xl px-5 py-24 md:py-32">
-        <SectionHeading eyebrow="who it serves" title={WHO_FOR.title} />
+        <SectionHeading eyebrow={UI.whoForEyebrow} title={WHO_FOR.title} />
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {WHO_FOR.cards.map((card, i) => {
             const Icon = WHO_ICONS[card.key];
@@ -467,7 +465,8 @@ export function WhoFor() {
 /* --------------------------------- team ----------------------------------- */
 
 export function TeamSection() {
-  const { members } = usePublicTeam();
+  const { TEAM, UI } = useContent();
+  const { members } = usePublicTeam(TEAM.members);
   return (
     <section id={TEAM.id} className="relative scroll-mt-20 overflow-hidden">
       <div
@@ -476,7 +475,7 @@ export function TeamSection() {
         aria-hidden="true"
       />
       <div className="mx-auto max-w-6xl px-5 py-24 md:py-32">
-        <SectionHeading eyebrow="the crew" title={TEAM.title} intro={TEAM.intro} />
+        <SectionHeading eyebrow={UI.teamEyebrow} title={TEAM.title} intro={TEAM.intro} />
         <Reveal delay={150}>
           <p className="mt-6 max-w-3xl border-l-2 border-vellamo-teal pl-6 text-vellamo-ice/80">
             {TEAM.why}
@@ -514,6 +513,7 @@ export function TeamSection() {
 /* -------------------------------- contact --------------------------------- */
 
 export function ContactSection() {
+  const { CONTACT, UI } = useContent();
   const [status, setStatus] = useState("");
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -554,7 +554,7 @@ export function ContactSection() {
       <div className="mx-auto max-w-6xl px-5 py-24 md:py-32">
         <div className="grid gap-14 md:grid-cols-2">
           <div>
-            <SectionHeading eyebrow="start here" title={CONTACT.title} intro={CONTACT.intro} />
+            <SectionHeading eyebrow={UI.contactEyebrow} title={CONTACT.title} intro={CONTACT.intro} />
             <Reveal delay={200}>
               <a
                 href={`mailto:${CONTACT.email}`}
@@ -569,7 +569,7 @@ export function ContactSection() {
             <form
               onSubmit={handleSubmit}
               className="glass-strong grid gap-4 rounded-3xl p-8"
-              aria-label="Contact form"
+              aria-label={UI.contactAriaLabel}
             >
               <div className="grid gap-4 sm:grid-cols-2">
                 <label className="block">
@@ -614,12 +614,12 @@ export function ContactSection() {
               </label>
               {status === "ok" && (
                 <p className="rounded-lg border border-vellamo-teal/30 bg-vellamo-teal/10 px-4 py-3 text-sm text-vellamo-teal">
-                  Thanks — your message has been sent. We'll be in touch.
+                  {UI.contactSuccess}
                 </p>
               )}
               {status === "error" && (
                 <p className="rounded-lg border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm text-red-200">
-                  Something went wrong. Please try again or email us directly.
+                  {UI.contactError}
                 </p>
               )}
               <motion.button

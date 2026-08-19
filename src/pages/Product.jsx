@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { PRODUCT_PAGE, NAV } from "../content.js";
+import { useContent, useLocale } from "../i18n/LocaleContext.jsx";
 import {
   PageHeader,
   Problem,
@@ -11,6 +11,8 @@ import Reveal from "../components/Reveal.jsx";
 
 /** Product page: the problem, the Sense → Model → Act flow, and delivery. */
 export default function Product() {
+  const { PRODUCT_PAGE, NAV, UI } = useContent();
+  const { path } = useLocale();
   return (
     <>
       <PageHeader title={PRODUCT_PAGE.title} intro={PRODUCT_PAGE.intro} />
@@ -20,7 +22,7 @@ export default function Product() {
       <section>
         <div className="mx-auto max-w-6xl px-5 py-24 md:py-32">
           <Reveal>
-            <p className="eyebrow uppercase">how you get it</p>
+            <p className="eyebrow uppercase">{UI.deliveryEyebrow}</p>
             <h2 className="mt-3 text-3xl font-bold text-vellamo-ice md:text-5xl">
               {PRODUCT_PAGE.delivery.title}
             </h2>
@@ -50,7 +52,7 @@ export default function Product() {
         />
         <div className="mx-auto max-w-6xl px-5 py-24 md:py-32">
           <Reveal>
-            <p className="eyebrow uppercase">pricing</p>
+            <p className="eyebrow uppercase">{UI.pricingEyebrow}</p>
             <h2 className="mt-3 text-3xl font-bold text-vellamo-ice md:text-5xl">
               {PRODUCT_PAGE.pricing.title}
             </h2>
@@ -74,7 +76,7 @@ export default function Product() {
           <Reveal delay={200}>
             <div className="mt-14">
               <Link
-                to="/contact"
+                to={path("/contact")}
                 className="glow-teal inline-block rounded-xl bg-vellamo-teal px-7 py-3.5 font-semibold text-white transition-transform hover:scale-[1.04]"
               >
                 {NAV.cta}

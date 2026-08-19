@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
 import { isSupabaseConfigured, supabase } from "../supabase.js";
-import { TEAM } from "../content.js";
 
-export function usePublicTeam() {
-  const [members, setMembers] = useState(TEAM.members);
+/**
+ * Team members: live from Supabase if configured, otherwise the given
+ * locale's static fallback (Supabase content isn't localized yet, so the
+ * live data — when present — is only shown as-is regardless of locale).
+ */
+export function usePublicTeam(fallbackMembers) {
+  const [members, setMembers] = useState(fallbackMembers);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

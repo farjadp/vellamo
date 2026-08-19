@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import { useContent, useLocale } from "../i18n/LocaleContext.jsx";
 import { usePublicPost } from "../hooks/usePublicPosts.js";
 import { PageHeader } from "../components/Sections.jsx";
 import Reveal from "../components/Reveal.jsx";
@@ -6,13 +7,15 @@ import Reveal from "../components/Reveal.jsx";
 /** Individual article / knowledge-base post. */
 export default function PostPage() {
   const { slug } = useParams();
-  const { post, loading } = usePublicPost(slug);
+  const { NEWS_PAGE, UI } = useContent();
+  const { path } = useLocale();
+  const { post, loading } = usePublicPost(slug, NEWS_PAGE.posts);
 
   if (loading) {
     return (
       <section className="pt-28">
         <div className="mx-auto max-w-6xl px-5">
-          <p className="text-vellamo-ice/60">Loading…</p>
+          <p className="text-vellamo-ice/60">{UI.loading}</p>
         </div>
       </section>
     );
@@ -22,12 +25,12 @@ export default function PostPage() {
     return (
       <section className="pt-28">
         <div className="mx-auto max-w-6xl px-5">
-          <h1 className="text-3xl font-bold text-vellamo-ice">Not found</h1>
-          <p className="mt-2 text-vellamo-ice/60">
-            That article doesn't exist or isn't published yet.
-          </p>
-          <Link to="/news" className="mt-6 inline-block text-vellamo-teal hover:underline">
-            Back to news
+          <h1 className="text-3xl font-bold text-vellamo-ice">
+            {UI.postNotFoundTitle}
+          </h1>
+          <p className="mt-2 text-vellamo-ice/60">{UI.postNotFoundText}</p>
+          <Link to={path("/news")} className="mt-6 inline-block text-vellamo-teal hover:underline">
+            {UI.backToNews}
           </Link>
         </div>
       </section>

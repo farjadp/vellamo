@@ -1,9 +1,12 @@
 import { Link } from "react-router-dom";
+import { useContent, useLocale } from "../i18n/LocaleContext.jsx";
 import Reveal from "../components/Reveal.jsx";
 import { LogoMark } from "../components/Graphics.jsx";
 
 /** 404 page — shown for any route that doesn't match, styled to match the rest of the site. */
 export default function NotFound() {
+  const { NOT_FOUND } = useContent();
+  const { path } = useLocale();
   return (
     <section className="relative overflow-hidden">
       <div
@@ -17,27 +20,26 @@ export default function NotFound() {
             <LogoMark size={40} tone="light" />
           </div>
           <p className="text-sm font-medium uppercase tracking-widest text-vellamo-teal">
-            404
+            {NOT_FOUND.eyebrow}
           </p>
           <h1 className="mt-4 text-4xl font-bold text-vellamo-ice md:text-6xl">
-            Lost beneath the surface.
+            {NOT_FOUND.title}
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-lg text-vellamo-ice/70">
-            This page doesn't exist — it may have moved, or the link was
-            mistyped. Let's get you back to solid ground.
+            {NOT_FOUND.text}
           </p>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
             <Link
-              to="/"
+              to={path("/")}
               className="glow-teal rounded-xl bg-vellamo-teal px-6 py-3 text-sm font-semibold text-white transition-transform hover:scale-[1.05]"
             >
-              Back to home
+              {NOT_FOUND.home}
             </Link>
             <Link
-              to="/contact"
+              to={path("/contact")}
               className="rounded-xl border border-vellamo-ice/15 px-6 py-3 text-sm font-medium text-vellamo-ice/80 transition-colors hover:border-vellamo-teal/40 hover:text-vellamo-teal"
             >
-              Contact us
+              {NOT_FOUND.contact}
             </Link>
           </div>
         </Reveal>

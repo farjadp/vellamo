@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { HOME, PROBLEM } from "../content.js";
+import { useContent, useLocale } from "../i18n/LocaleContext.jsx";
 import { Hero, TiltCard } from "../components/Sections.jsx";
 import Reveal from "../components/Reveal.jsx";
 import {
@@ -17,6 +17,8 @@ const PROBLEM_ICONS = {
 
 /** Compact glimpse of the problem — full story lives on the Product page. */
 function ProblemGlimpse() {
+  const { HOME, PROBLEM } = useContent();
+  const { path } = useLocale();
   return (
     <section className="relative">
       <div className="mx-auto max-w-6xl px-5 py-24 md:py-32">
@@ -50,7 +52,7 @@ function ProblemGlimpse() {
         </div>
         <Reveal delay={220}>
           <Link
-            to="/product"
+            to={path("/product")}
             className="group mt-12 inline-flex items-center gap-2 font-semibold text-vellamo-teal"
           >
             {HOME.glimpse.link}
@@ -69,6 +71,8 @@ function ProblemGlimpse() {
 
 /** Teaser cards linking to the inner pages. */
 function Explore() {
+  const { HOME } = useContent();
+  const { path } = useLocale();
   return (
     <section className="relative overflow-hidden">
       <div
@@ -86,7 +90,7 @@ function Explore() {
         <div className="mt-14 grid gap-6 sm:grid-cols-2">
           {HOME.explore.cards.map((card, i) => (
             <Reveal key={card.key} delay={i * 110}>
-              <Link to={card.to} className="group block h-full">
+              <Link to={path(card.to)} className="group block h-full">
                 <TiltCard className="h-full p-8">
                   <div className="flex items-center justify-between">
                     <h3 className="text-2xl font-semibold text-vellamo-ice">
@@ -112,6 +116,8 @@ function Explore() {
 
 /** Slim closing CTA band — the full form lives on the Contact page. */
 function CtaBand() {
+  const { HOME } = useContent();
+  const { path } = useLocale();
   return (
     <section className="relative overflow-hidden">
       <div
@@ -127,7 +133,7 @@ function CtaBand() {
             </h2>
             <p className="mx-auto mt-4 max-w-xl">{HOME.ctaBand.text}</p>
             <Link
-              to="/contact"
+              to={path("/contact")}
               className="glow-teal mt-8 inline-block rounded-xl bg-vellamo-teal px-8 py-4 font-semibold text-white transition-transform hover:scale-[1.04]"
             >
               {HOME.ctaBand.button}

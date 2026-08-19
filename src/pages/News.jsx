@@ -1,12 +1,14 @@
 import { Link } from "react-router-dom";
-import { NEWS_PAGE } from "../content.js";
+import { useContent, useLocale } from "../i18n/LocaleContext.jsx";
 import { PageHeader } from "../components/Sections.jsx";
 import Reveal from "../components/Reveal.jsx";
 import { usePublicPosts } from "../hooks/usePublicPosts.js";
 
 /** News & knowledge base page — reads live posts from Supabase, falls back to placeholders. */
 export default function News() {
-  const { posts } = usePublicPosts();
+  const { NEWS_PAGE, UI } = useContent();
+  const { path } = useLocale();
+  const { posts } = usePublicPosts(NEWS_PAGE.posts);
 
   return (
     <>
@@ -29,10 +31,10 @@ export default function News() {
                   <p className="mt-2 text-sm">{post.excerpt}</p>
                   {post.slug && (
                     <Link
-                      to={`/news/${post.slug}`}
+                      to={path(`/news/${post.slug}`)}
                       className="mt-4 inline-block text-sm font-semibold text-vellamo-teal hover:underline"
                     >
-                      Read more →
+                      {UI.readMore} →
                     </Link>
                   )}
                 </article>
