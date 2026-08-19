@@ -1,19 +1,30 @@
-# vellamo — marketing site
+# vellamo — monorepo
 
-Single-page marketing website for Vellamo, a Finland-based structural health
-monitoring company for marine and port infrastructure.
+Vellamo is a Finland-based structural health monitoring company for marine
+and port infrastructure. This repo holds the marketing site and, going
+forward, the actual product (sensor data, digital twin, customer dashboard).
 
-## Stack
+## Layout
 
-- React 18 (functional components) + Vite
-- Tailwind CSS 3 with brand colors exposed as CSS variables
-- All graphics are inline SVG — no external images
+```
+apps/
+  marketing/   The public site + admin panel (React + Vite + Tailwind).
+                 This is what deploys to vellamo.io — see below.
+  dashboard/   The product: customer-facing condition dashboard. (planned)
+packages/
+  simulator/   Synthetic sensor-data generator for demos, before real
+                 hardware exists. (planned)
+supabase/
+  schema.sql   Shared database schema — marketing content tables today,
+                 product tables (structures, sensors, readings, alerts)
+                 as they're added.
+```
 
 ## Run locally
 
 ```bash
-npm install
-npm run dev
+npm install          # installs all workspaces
+npm run dev           # marketing site, http://localhost:5173
 ```
 
 ## Build
@@ -22,17 +33,20 @@ npm run dev
 npm run build
 ```
 
-## Editing copy
+Builds the marketing app and writes output to the repo-root `dist/` —
+Vercel's default Vite detection (root directory unset, output `dist`)
+keeps working unchanged even though the app itself lives in
+`apps/marketing/`.
 
-All section text lives in `src/content.js` — edit copy there without touching
-layout code in `src/App.jsx`.
+## Editing marketing copy
+
+All section text lives in `apps/marketing/src/content/{en,fi,sv}.js` — one
+file per locale, same shape — edit copy there without touching layout code.
 
 ## Brand rules encoded in the code
 
-- Palette variables in `src/index.css`; the marketing site uses blue / teal /
-  ice / gray only. Amber and red are defined but reserved for the future
-  product dashboard.
-- The logo mark (`src/components/Graphics.jsx`) is strictly orthogonal — no
-  diagonal lines.
-- Team cards use placeholder icon avatars; comments in `src/App.jsx` mark
-  where real photos go.
+- Palette variables in `apps/marketing/src/index.css`; the marketing site
+  uses blue / teal / ice / gray only. Amber and red are defined but
+  reserved for the product dashboard.
+- The logo mark (`apps/marketing/src/components/Graphics.jsx`) is strictly
+  orthogonal — no diagonal lines.
