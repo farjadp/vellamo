@@ -8,6 +8,7 @@ import ContactPage from "./pages/ContactPage.jsx";
 import About from "./pages/About.jsx";
 import News from "./pages/News.jsx";
 import PostPage from "./pages/PostPage.jsx";
+import NotFound from "./pages/NotFound.jsx";
 
 const AdminApp = lazy(() => import("./admin/AdminApp.jsx"));
 
@@ -32,7 +33,7 @@ export default function App() {
           <Route path="/about" element={<About />} />
           <Route path="/news" element={<News />} />
           <Route path="/news/:slug" element={<PostPage />} />
-          <Route path="*" element={<Home />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </BrowserRouter>
